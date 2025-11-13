@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Colores modo claro */
+  --color-primary: #000000;
+  --color-primary-hover: #374151;
+  --color-background: #ffffff;
+  --color-surface: #f8fafc;
+  --color-card: #ffffff;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-border: #e5e7eb;
+  --color-border-light: #f3f4f6;
+  --color-border-focus: #4b5563;
+  --color-error: #dc2626;
+  --color-error-bg: #fef2f2;
+}
+
+.dark {
+  /* Colores modo oscuro */
+  --color-primary: #ffffff;
+  --color-primary-hover: #f3f4f6;
+  --color-background: #111827;
+  --color-surface: #1f2937;
+  --color-card: #1f2937;
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #d1d5db;
+  --color-border: #374151;
+  --color-border-light: #4b5563;
+  --color-border-focus: #9ca3af;
+  --color-error: #ef4444;
+  --color-error-bg: #450a0a;
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-feature-settings: 'kern' 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  /* Tracking más ajustado para Inter */
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.025em;
+  }
+  
+  p, span, div {
+    letter-spacing: -0.011em;
+  }
+}
