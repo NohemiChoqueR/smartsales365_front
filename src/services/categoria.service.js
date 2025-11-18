@@ -1,3 +1,4 @@
+// src/services/categoria.service.js
 import api from './api.service';
 
 export const categoriaService = {

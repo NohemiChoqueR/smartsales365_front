@@ -1,32 +1,38 @@
 // src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import Layout from './components/layout/Layout';
 
 // Vistas Públicas
 import LoginPage from './pages/LoginPage';
-import HomePage from './pages/HomePage'; 
+import HomePage from './pages/HomePage';
 import ProductPage from './pages/client/ProductPage';
 import RegisterPage from './pages/RegisterPage';
 
-// Vistas Protegidas (Admin)
+// Vistas Protegidas
 import DashboardPage from './pages/admin/DashboardPage';
+import Dashboard2Page from './pages/admin/Dashboard2_TEMP.jsx';
 import UsersPage from './pages/admin/UsersPage';
 import RolesPage from './pages/admin/RolesPage';
 import PermissionsPage from './pages/admin/PermissionsPage';
 import ModulesPage from './pages/admin/ModulesPage';
 import MarcaPage from './pages/admin/MarcaPage';
 import CategoriaPage from './pages/admin/CategoriaPage';
-
-import './App.css';
 import InteligencePage from './pages/admin/InteligencePage';
 import ReportesPage from './pages/admin/ReportesPage';
 import AnalyticsPage from './pages/admin/AnalyticsPage';
+import Predicciones2Page from './pages/admin/Predicciones2Page';
+import Reportes2Page from "./pages/admin/Reportes2Page";
 
-const ProtectedRoute = ({ children }) => {
+import './App.css';
+
+/* ----------------------------------------------
+   🔒 ProtectedRoute: protege rutas privadas
+------------------------------------------------- */
+const ProtectedRoute = () => {
   const { isAuthenticated, loading } = useAuth();
-  
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -34,105 +40,53 @@ const ProtectedRoute = ({ children }) => {
       </div>
     );
   }
-  
-  return isAuthenticated ? children : <Navigate to="/login" />;
+
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 
+/* ----------------------------------------------
+   🚀 App principal
+------------------------------------------------- */
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate to="/home" />} /> {/* Redirección de raíz */}
-          {/* --- RUTAS PÚBLICAS --- */}
-          {/* 2. La ruta raíz (/) ahora es la página de inicio pública */}
-          <Route path="/home" element={<HomePage />} /> 
+
+          {/* ------------------------------------
+             🌐 RUTAS PÚBLICAS
+          ------------------------------------ */}
+          <Route path="/" element={<Navigate to="/home" />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/catalogo" element={<ProductPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
-          {/* --- RUTAS PROTEGIDAS (ADMIN DASHBOARD) --- */}
-          {/* 3. El dashboard ahora vive solo en /dashboard */}
-          <Route path="/dashboard" element={
-            <ProtectedRoute>
-              <Layout>
-                <DashboardPage />
-              </Layout>
-            </ProtectedRoute>
-          } />
-          <Route path="/users" element={
-            <ProtectedRoute>
-              <Layout>
-                <UsersPage />
-              </Layout>
-            </ProtectedRoute>
-          } />
-          <Route path="/roles" element={
-            <ProtectedRoute>
-              <Layout>
-                <RolesPage />
-              </Layout>
-            </ProtectedRoute>
-          } />
-          <Route path="/permissions" element={
-            <ProtectedRoute>
-              <Layout>
-                <PermissionsPage />
-              </Layout>
-            </ProtectedRoute>
-          } />
-          <Route path="/modules" element={
-            <ProtectedRoute>
-              <Layout>
-                <ModulesPage />
-              </Layout>
-            </ProtectedRoute>
-          } />
-          <Route path="/brands" element={
-            <ProtectedRoute>
-              <Layout>
-                <MarcaPage />
-              </Layout>
-            </ProtectedRoute>
-          } />
-          <Route path="/categories" element={
-            <ProtectedRoute>
-              <Layout>
-                <CategoriaPage />
-              </Layout>
-            </ProtectedRoute>
-          } />
-          <Route path="/inteligencia" element={
-            <ProtectedRoute>
-              <Layout>
-                <InteligencePage />
-              </Layout>
-            </ProtectedRoute>
-          } />
-          <Route path="/reportes" element={
-            <ProtectedRoute>
-              <Layout>
-                <ReportesPage />
-              </Layout>
-            </ProtectedRoute>
-          } />
-          <Route path="/analytics" element={
-            <ProtectedRoute>
-              <Layout>
-                <AnalyticsPage />
-              </Layout>
-            </ProtectedRoute>
-          } />
-          {/* NOTA: Puedes añadir aquí las nuevas rutas del admin (marcas, categorias, etc.) */}
-          {/* Ejemplo:
-          <Route path="/productos" element={
-            <ProtectedRoute>
-              <Layout>
-                <ProductosPage />
-              </Layout>
-            </ProtectedRoute>
-          } />
-          */}
+          {/* ------------------------------------
+             🔐 RUTAS PRIVADAS (con Layout)
+             Todas las rutas hijas usan Sidebar + Layout
+          ------------------------------------ */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<Layout />}>
+
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/dashboard2" element={<Dashboard2Page />} />
+<Route path="/predicciones2" element={<Predicciones2Page />} />
+
+              <Route path="/users" element={<UsersPage />} />
+              <Route path="/roles" element={<RolesPage />} />
+              <Route path="/permissions" element={<PermissionsPage />} />
+              <Route path="/modules" element={<ModulesPage />} />
+              <Route path="/brands" element={<MarcaPage />} />
+              <Route path="/categories" element={<CategoriaPage />} />
+
+              <Route path="/inteligencia" element={<InteligencePage />} />
+              <Route path="/reportes" element={<ReportesPage />} />
+              <Route path="/reportes2" element={<Reportes2Page />} />
+              <Route path="/analytics" element={<AnalyticsPage />} />
+
+            </Route>
+          </Route>
 
         </Routes>
       </Router>

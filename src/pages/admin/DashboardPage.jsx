@@ -1,3 +1,4 @@
+// src/pages/admin/DashboardPage.jsx
 import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useAuth'; // Ya lo tenías
 import DatePicker, { registerLocale } from 'react-datepicker';

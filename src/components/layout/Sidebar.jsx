@@ -1,3 +1,4 @@
+// src/components/layout/Sidebar.jsx
 import React, { useState } from 'react';
 import { 
   LayoutDashboard, 
@@ -148,18 +149,32 @@ const Sidebar = () => {
       {/* Navegación */}
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
         {/* Dashboard siempre visible */}
-        <SidebarLink 
+        {/* <SidebarLink 
           icon={LayoutDashboard} 
           text="Dashboard" 
           to="/dashboard"
           collapsed={isCollapsed}
-        />
+        /> */}
         <SidebarLink 
+  icon={LayoutDashboard} 
+  text="Dashboard Empresarial" 
+  to="/dashboard2"
+  collapsed={isCollapsed}
+/>
+
+        {/* <SidebarLink 
           icon={TrendingUp} 
           text="Predicciones" 
           to="/inteligencia"
           collapsed={isCollapsed}
-        />
+        /> */}
+        <SidebarLink 
+  icon={TrendingUp} 
+  text="Predicciones " 
+  to="/predicciones2"
+  collapsed={isCollapsed}
+/>
+
         {/* --- ¡NUEVA PÁGINA DE REPORTES AÑADIDA! --- */}
         <SidebarLink 
           icon={FileText} 
@@ -167,6 +182,14 @@ const Sidebar = () => {
           to="/reportes"
           collapsed={isCollapsed}
         />
+{/* --- NUEVO: Reportes Inteligentes IA --- */}
+<SidebarLink 
+  icon={Brain} 
+  text="Reportes IA" 
+  to="/reportes2"
+  collapsed={isCollapsed}
+/>
+
                 {/* --- ¡ENLACE ACTUALIZADO! --- */}
         <SidebarLink 
           icon={Brain} 
